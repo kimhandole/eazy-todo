@@ -2,20 +2,32 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar, Dimensions, Platform } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import ToDo from './ToDo';
+import { AppLoading } from "expo";
 
 const { height, width } = Dimensions.get("window");
 
 export default class App extends React.Component {
   state = {
-    newToDo: ""
+    newToDo: "",
+    loadedToDos: false
   };
+  componentDidMount = () => {
+    this._loadToDos();
+  }
   _controllNewToDo = text => {
     this.setState({
       newToDo: text
     });
   };
+  _loadToDos = () => {
+    
+  }
+
   render() {
-    const { newToDo } = this.state;
+    const { newToDo, loadedToDos } = this.state;
+    if(!loadedToDos) {
+      return <AppLaoding />
+    }
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -31,7 +43,7 @@ export default class App extends React.Component {
             autoCorrect={false}
           />
           <ScrollView contentContainerStyle={styles.toDos}>
-            <ToDo />
+            
           </ScrollView>
         </View>
       </View>
